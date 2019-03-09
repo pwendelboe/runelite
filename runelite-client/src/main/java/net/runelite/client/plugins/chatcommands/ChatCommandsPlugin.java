@@ -367,6 +367,10 @@ public class ChatCommandsPlugin extends Plugin
 		}
 
 		ChatMessageType type = chatMessage.getType();
+		if (message.length() <= KILLCOUNT_COMMAND_STRING.length() + 1)
+		{
+			return;
+		}
 		String search = message.substring(KILLCOUNT_COMMAND_STRING.length() + 1);
 
 		final String player;
@@ -482,6 +486,10 @@ public class ChatCommandsPlugin extends Plugin
 		{
 			return;
 		}
+		if (message.length() <= PB_COMMAND.length() + 1)
+		{
+			return;
+		}
 
 		ChatMessageType type = chatMessage.getType();
 		String search = message.substring(PB_COMMAND.length() + 1);
@@ -573,6 +581,10 @@ public class ChatCommandsPlugin extends Plugin
 		{
 			return;
 		}
+		if (message.length() <= PRICE_COMMAND_STRING.length() + 1)
+		{
+			return;
+		}
 
 		MessageNode messageNode = chatMessage.getMessageNode();
 		String search = message.substring(PRICE_COMMAND_STRING.length() + 1);
@@ -626,6 +638,10 @@ public class ChatCommandsPlugin extends Plugin
 	private void playerSkillLookup(ChatMessage chatMessage, String message)
 	{
 		if (!config.lvl())
+		{
+			return;
+		}
+		if (message.length() <= LEVEL_COMMAND_STRING.length() + 1)
 		{
 			return;
 		}
