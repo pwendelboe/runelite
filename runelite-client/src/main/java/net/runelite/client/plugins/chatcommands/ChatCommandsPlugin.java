@@ -368,7 +368,7 @@ public class ChatCommandsPlugin extends Plugin
 
 		ChatMessageType type = chatMessage.getType();
 		
-		if (message.length() < KILLCOUNT_COMMAND_STRING.length() + 1)
+		if (message.length() <= KILLCOUNT_COMMAND_STRING.length())
 		{
 			return; //check that the string is long enough before accessing it.
 		}
@@ -489,7 +489,7 @@ public class ChatCommandsPlugin extends Plugin
 			return;
 		}
 		
-		if (message.length() < PB_COMMAND.length() + 1)
+		if (message.length() <= PB_COMMAND.length())
 		{
 			return; //check that the string is long enough before accessing it.
 		}
@@ -585,7 +585,7 @@ public class ChatCommandsPlugin extends Plugin
 			return;
 		}
 		
-		if (message.length() < PRICE_COMMAND_STRING.length() + 1)
+		if (message.length() <= PRICE_COMMAND_STRING.length())
 		{
 			return; //check that the string is long enough before accessing it.
 		}
@@ -646,7 +646,7 @@ public class ChatCommandsPlugin extends Plugin
 			return;
 		}
 		
-		if (message.length() < LEVEL_COMMAND_STRING.length() + 1)
+		if (message.length() <= LEVEL_COMMAND_STRING.length())
 		{
 			return; //check that the string is long enough before accessing it.
 		}
