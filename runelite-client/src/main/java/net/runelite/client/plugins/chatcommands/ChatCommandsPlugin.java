@@ -645,11 +645,6 @@ public class ChatCommandsPlugin extends Plugin
 		{
 			return;
 		}
-		
-		if (message.length() <= LEVEL_COMMAND_STRING.length())
-		{
-			return; //check that the string is long enough before accessing it.
-		}
 
 		String search;
 		if (message.equalsIgnoreCase(TOTAL_LEVEL_COMMAND_STRING))
@@ -658,6 +653,12 @@ public class ChatCommandsPlugin extends Plugin
 		}
 		else
 		{
+			
+			if (message.length() <= LEVEL_COMMAND_STRING.length())
+			{
+				return; //check that the string is long enough before accessing it.
+			}
+			
 			search = message.substring(LEVEL_COMMAND_STRING.length() + 1);
 		}
 
