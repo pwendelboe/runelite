@@ -13,5 +13,6 @@ public interface EnchantingAssistConfig extends Config
 		name = "Plugin active",
 		description = "Highlights jewlery that you can enchant in your invewntory."
 	)
-	default boolean booleanConfig(){return true;}
+	default boolean booleanConfig()
+	{ return true; }
 }

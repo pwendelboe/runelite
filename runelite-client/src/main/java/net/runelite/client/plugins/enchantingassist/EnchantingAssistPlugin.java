@@ -10,7 +10,7 @@ import net.runelite.client.ui.overlay.OverlayManager;
 @PluginDescriptor(
 	name = "Enchanting assist",
 	description = "Hihlights enchantable jewlery",
-	tags = {"jewlery","enchanting","enchant","magic","crafting","craft"}
+	tags = {"jewlery", "enchanting", "enchant", "magic", "crafting", "craft"}
 )
 
 public class EnchantingAssistPlugin extends Plugin
