@@ -372,12 +372,6 @@ public class ChatCommandsPlugin extends Plugin
 		}
 
 		ChatMessageType type = chatMessage.getType();
-		
-		if (message.length() <= KILLCOUNT_COMMAND_STRING.length())
-		{
-			return; //check that the string is long enough before accessing it.
-		}
-		
 		String search = message.substring(KILLCOUNT_COMMAND_STRING.length() + 1);
 
 		final String player;
@@ -493,11 +487,6 @@ public class ChatCommandsPlugin extends Plugin
 		{
 			return;
 		}
-		
-		if (message.length() <= PB_COMMAND.length())
-		{
-			return; //check that the string is long enough before accessing it.
-		}
 
 		if (message.length() <= PB_COMMAND.length())
 		{
@@ -594,11 +583,6 @@ public class ChatCommandsPlugin extends Plugin
 		{
 			return;
 		}
-		
-		if (message.length() <= PRICE_COMMAND_STRING.length())
-		{
-			return; //check that the string is long enough before accessing it.
-		}
 
 		if (message.length() <= PRICE_COMMAND_STRING.length())
 		{
@@ -659,11 +643,6 @@ public class ChatCommandsPlugin extends Plugin
 		if (!config.lvl())
 		{
 			return;
-		}
-		
-		if (message.length() <= LEVEL_COMMAND_STRING.length())
-		{
-			return; //check that the string is long enough before accessing it.
 		}
 
 		String search;
