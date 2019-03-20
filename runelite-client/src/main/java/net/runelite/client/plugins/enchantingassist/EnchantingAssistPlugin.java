@@ -18,7 +18,7 @@ import net.runelite.client.ui.overlay.OverlayManager;
 import net.runelite.api.events.WidgetHiddenChanged;
 //import net.runelite.api.events.WidgetLoaded;
 //import net.runelite.api.widgets.Widget;
-import static net.runelite.api.widgets.WidgetID.RESIZABLE_VIEWPORT_OLD_SCHOOL_BOX_GROUP_ID;
+//import static net.runelite.api.widgets.WidgetID.RESIZABLE_VIEWPORT_OLD_SCHOOL_BOX_GROUP_ID;
 
 @PluginDescriptor(
 	name = "Enchanting assist",
@@ -64,7 +64,7 @@ public class EnchantingAssistPlugin extends Plugin
 		//	System.out.println(event.getWidget().getChild(i).getText());
 		//}
 		//System.out.println(event.getWidget().getId());
-		if(TO_GROUP(event.getWidget().getId())==SPELLBOOK_GROUP_ID)
+		if (TO_GROUP(event.getWidget().getId()) == SPELLBOOK_GROUP_ID)
 		{
 			System.out.println("Got 'em!");
 			System.out.println(event.getWidget());
