@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, Devin French <https://github.com/devinfrench>
+ * Copyright (c) 2018, Kruithne <kruithne@gmail.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,53 +22,33 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.api.queries;
+package net.runelite.client.plugins.customcursor;
 
-import net.runelite.api.Client;
-import net.runelite.api.Query;
-import net.runelite.api.widgets.WidgetItem;
+import java.awt.image.BufferedImage;
+import lombok.Getter;
+import net.runelite.client.util.ImageUtil;
 
-public abstract class WidgetItemQuery extends Query<WidgetItem, WidgetItemQuery>
+public enum CustomCursor
 {
+	RS3_GOLD("RS3 Gold", "cursor-rs3-gold.png"),
+	RS3_SILVER("RS3 Silver", "cursor-rs3-silver.png"),
+	DRAGON_DAGGER("Dragon Dagger", "cursor-dragon-dagger.png"),
+	TROUT("Trout", "cursor-trout.png"),
+	DRAGON_SCIMITAR("Dragon Scimitar", "cursor-dragon-scimitar.png");
 
-	public WidgetItemQuery idEquals(int... ids)
-	{
-		predicate = and(item ->
-		{
-			for (int id : ids)
-			{
-				if (item.getId() == id)
-				{
-					return true;
-				}
-			}
-			return false;
-		});
-		return this;
-	}
+	private final String name;
+	@Getter
+	private final BufferedImage cursorImage;
 
-	public WidgetItemQuery indexEquals(int... indexes)
+	CustomCursor(String name, String icon)
 	{
-		predicate = and(item ->
-		{
-			for (int index : indexes)
-			{
-				if (item.getIndex() == index)
-				{
-					return true;
-				}
-			}
-			return false;
-		});
-		return this;
-	}
-
-	public WidgetItemQuery quantityEquals(int quantity)
-	{
-		predicate = and(item -> item.getQuantity() == quantity);
-		return this;
+		this.name = name;
+		this.cursorImage = ImageUtil.getResourceStreamFromClass(CustomCursorPlugin.class, icon);
 	}
 
 	@Override
-	public abstract WidgetItem[] result(Client client);
+	public String toString()
+	{
+		return name;
+	}
 }
