@@ -28,6 +28,7 @@ package net.runelite.client.plugins.slayer;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import java.util.Map;
+import javax.annotation.Nullable;
 import lombok.Getter;
 import net.runelite.api.ItemID;
 
@@ -107,7 +108,7 @@ enum Task
 	ICEFIENDS("Icefiends", ItemID.ICE_DIAMOND),
 	INFERNAL_MAGES("Infernal mages", ItemID.INFERNAL_MAGE, "Malevolent mage"),
 	IRON_DRAGONS("Iron dragons", ItemID.IRON_DRAGON_MASK),
-	JAD("TzTok-Jad", ItemID.TZREKJAD),
+	JAD("TzTok-Jad", ItemID.TZREKJAD, 25250),
 	JELLIES("Jellies", ItemID.JELLY, "Jelly"),
 	JUNGLE_HORROR("Jungle horrors", ItemID.ENSOULED_HORROR_HEAD),
 	KALPHITE("Kalphite", ItemID.KALPHITE_SOLDIER),
@@ -171,7 +172,7 @@ enum Task
 	ZILYANA("Commander Zilyana", ItemID.PET_ZILYANA),
 	ZOMBIES("Zombies", ItemID.ZOMBIE_HEAD, "Undead"),
 	ZULRAH("Zulrah", ItemID.PET_SNAKELING),
-	ZUK("TzKal-Zuk", ItemID.TZREKZUK);
+	ZUK("TzKal-Zuk", ItemID.TZREKZUK, 101890);
 	//</editor-fold>
 
 	private static final Map<String, Task> tasks;
@@ -181,6 +182,7 @@ enum Task
 	private final String[] targetNames;
 	private final int weaknessThreshold;
 	private final int weaknessItem;
+	private final int expectedKillExp;
 
 	static
 	{
@@ -202,6 +204,7 @@ enum Task
 		this.weaknessThreshold = -1;
 		this.weaknessItem = -1;
 		this.targetNames = targetNames;
+		this.expectedKillExp = 0;
 	}
 
 	Task(String name, int itemSpriteId, int weaknessThreshold, int weaknessItem, String... targetNames)
@@ -212,8 +215,21 @@ enum Task
 		this.weaknessThreshold = weaknessThreshold;
 		this.weaknessItem = weaknessItem;
 		this.targetNames = targetNames;
+		this.expectedKillExp = 0;
 	}
 
+	Task(String name, int itemSpriteId, int expectedKillExp)
+	{
+		Preconditions.checkArgument(itemSpriteId >= 0);
+		this.name = name;
+		this.itemSpriteId = itemSpriteId;
+		this.weaknessThreshold = -1;
+		this.weaknessItem = -1;
+		this.targetNames = new String[0];
+		this.expectedKillExp = expectedKillExp;
+	}
+
+	@Nullable
 	static Task getTask(String taskName)
 	{
 		return tasks.get(taskName.toLowerCase());
