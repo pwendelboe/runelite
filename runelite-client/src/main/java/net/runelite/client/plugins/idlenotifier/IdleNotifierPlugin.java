@@ -45,6 +45,7 @@ import net.runelite.api.Player;
 import net.runelite.api.Skill;
 import net.runelite.api.VarPlayer;
 import net.runelite.api.Varbits;
+import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.GameTick;
@@ -88,6 +89,9 @@ public class IdleNotifierPlugin extends Plugin
 	private int lastAnimation = AnimationID.IDLE;
 	private Instant lastInteracting;
 	private Actor lastInteract;
+	private Instant lastMoving;
+	private WorldPoint lastPosition;
+	private boolean notifyPosition = false;
 	private boolean notifyHitpoints = true;
 	private boolean notifyPrayer = true;
 	private boolean notifyOxygen = true;
@@ -154,7 +158,7 @@ public class IdleNotifierPlugin extends Plugin
 			case CRAFTING_LEATHER:
 			case CRAFTING_POTTERS_WHEEL:
 			case CRAFTING_POTTERY_OVEN:
-			/* Fletching(Cutting, Stringing) */
+			/* Fletching(Cutting, Stringing, Adding feathers and heads) */
 			case FLETCHING_BOW_CUTTING:
 			case FLETCHING_STRING_NORMAL_SHORTBOW:
 			case FLETCHING_STRING_OAK_SHORTBOW:
@@ -168,6 +172,8 @@ public class IdleNotifierPlugin extends Plugin
 			case FLETCHING_STRING_MAPLE_LONGBOW:
 			case FLETCHING_STRING_YEW_LONGBOW:
 			case FLETCHING_STRING_MAGIC_LONGBOW:
+			case FLETCHING_ATTACH_FEATHERS_TO_ARROWSHAFT:
+			case FLETCHING_ATTACH_HEADS:
 			/* Smithing(Anvil, Furnace, Cannonballs */
 			case SMITHING_ANVIL:
 			case SMITHING_SMELTING:
@@ -396,6 +402,11 @@ public class IdleNotifierPlugin extends Plugin
 		if (config.animationIdle() && checkAnimationIdle(waitDuration, local))
 		{
 			notifier.notify("[" + local.getName() + "] is now idle!");
+		}
+
+		if (config.movementIdle() && checkMovementIdle(waitDuration, local))
+		{
+			notifier.notify("[" + local.getName() + "] has stopped moving!");
 		}
 
 		if (config.interactionIdle() && checkInteractionIdle(waitDuration, local))
@@ -631,6 +642,37 @@ public class IdleNotifierPlugin extends Plugin
 		else
 		{
 			lastAnimating = Instant.now();
+		}
+
+		return false;
+	}
+
+	private boolean checkMovementIdle(Duration waitDuration, Player local)
+	{
+		if (lastPosition == null)
+		{
+			lastPosition = local.getWorldLocation();
+			return false;
+		}
+
+		WorldPoint position = local.getWorldLocation();
+
+		if (lastPosition.equals(position))
+		{
+			if (notifyPosition
+				&& local.getAnimation() == IDLE
+				&& Instant.now().compareTo(lastMoving.plus(waitDuration)) >= 0)
+			{
+				notifyPosition = false;
+				// Return true only if we weren't just breaking out of an animation
+				return lastAnimation == IDLE;
+			}
+		}
+		else
+		{
+			notifyPosition = true;
+			lastPosition = position;
+			lastMoving = Instant.now();
 		}
 
 		return false;
